@@ -185,6 +185,33 @@ public class JUnitTest {
     assertEquals(bCopy, b, "union() should not modify the original 'b' vector");
   }
 
+
+  @Test
+  public void testMixedTypeVectors() {
+    Vector<Object> a = new Vector<>();
+    a.add(1);       // Integer
+    a.add("two");   // String
+
+    Vector<Object> b = new Vector<>();
+    b.add(3.14);    // Double
+    b.add("two");   // Duplicate String
+
+    // We expect the union to just contain {1, "two", 3.14} in that order,
+    // since "two" should not be duplicated.
+    Vector<Object> expected = new Vector<>();
+    expected.add(1);
+    expected.add("two");
+    expected.add(3.14);
+
+    Vector<Object> actual = Main.union(a, b);
+    assertEquals(expected, actual,
+        "Union should handle mixed object types without error.");
+  }
+
+
+  
+
+
   @Test
   public void testNullInputA() {
     Vector<Object> a = null;
